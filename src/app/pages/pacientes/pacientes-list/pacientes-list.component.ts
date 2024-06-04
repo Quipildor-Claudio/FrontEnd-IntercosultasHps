@@ -20,14 +20,10 @@ export class PacientesListComponent  implements OnInit{
   }
 
   getAllData():void{
-    this.pacienteService.getAll().subscribe({
-      next: (data) => {
-        this.pacientes= data;
-        console.log(data);
-      },
-      error: (e) => console.error(e)
+    this.pacienteService.getAll().subscribe((res:any)=>{
+     this.pacientes= res.items as Paciente[];
+     console.log(this.pacientes);
     });
   }
-
 
 }
