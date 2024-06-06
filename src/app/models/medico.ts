@@ -1,5 +1,5 @@
-export class Medico{
-    id:any;
+export class Medico {
+    id: any;
     apellido: string;
     nombre: string;
     cuil: string;
@@ -7,4 +7,8 @@ export class Medico{
     matricula: string;
     servicio: string;
     funcion: string;
+
+    constructor(init?: Partial<Medico>) {
+        Object.assign(this, init);
+    }
 }

@@ -1,26 +1,108 @@
 <div class="container-fluid">
 
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Inicio</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">{{title}}</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-  
-    <!-- Main row -->
-    <div class="row">
-  
-    </div>
-    <!-- /.row (main row) -->
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Inicio</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">{{title}}</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
   </div>
+  <!-- /.content-header -->
+
+  <!-- Main row -->
+  <div class="row">
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title">Añadir Paciente</h3>
+          </div>
+          <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
+
+            <!-- /.card-header -->
+            <div class="card-body">
+
+              <div class="row">
+
+                <div class="form-group">
+                  <label for="dni">DNI:</label>
+                  <input id="dni" formControlName="dni" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="nombre">Nombres:</label>
+                  <input id="nombre" formControlName="nombre" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="apellido">Apellidos:</label>
+                  <input id="apellido" formControlName="apellido" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="fecha_nac">Fecha de Nacimiento:</label>
+                  <input id="fecha_nac" formControlName="fecha_nac" type="date" class="form-control"
+                    class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="sexo">Sexo:</label>
+                  <input id="sexo" formControlName="sexo" class="form-control" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="domicilio_pcte">Domicilio:</label>
+                  <input id="domicilio_pcte" formControlName="domicilio_pcte" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                </div>
+
+
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="numero_dom">Número :</label>
+                    <input id="numero_dom" formControlName="numero_dom" type="number" class="form-control-sm">
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+
+                  <div class="form-group">
+                    <label for="man_dom">Manzana:</label>
+                    <input id="man_dom" formControlName="man_dom" type="number" class="form-control-sm">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+
+                  <div class="form-group">
+                    <label for="lote_dom">Lote:</label>
+                    <input id="lote_dom" formControlName="lote_dom" type="number" class="form-control-sm">
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- /.row (main row) -->
+</div>
