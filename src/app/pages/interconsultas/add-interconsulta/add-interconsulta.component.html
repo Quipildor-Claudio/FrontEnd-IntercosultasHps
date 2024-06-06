@@ -20,7 +20,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <!-- general form elements -->
                 <div class="card card-info">
                     <div class="card-header">
@@ -28,12 +28,11 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form>
+                    
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Numero de Documento</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                    placeholder="Dni o Cuil">
+                                <input [formControl]="searchControl" placeholder="Buscar por DNI" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombres</label>
@@ -46,17 +45,194 @@
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info float-right">Buscar</button>
                         </div>
-                    </form>
+                   
                 </div>
                 <!-- /.card -->
 
+            </div>
 
-          
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Datos del Paciente</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+      
+                        <div class="card-body">
+                            <strong>Dni:</strong> &nbsp; {{patient.dni}}<br> 
+                            <strong>Nombres:</strong>&nbsp; {{patient.apellido}}&nbsp; {{patient.nombre}}<br>
+                            <strong>Edad:</strong>&nbsp; {{patient.edad}}<br>
+                            <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac}}<br>
+                            <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
 
 
 
 
 
+                        </div>
+                        <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Antecedentes Interconsultas</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Tipo de Consulta</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio1" checked>
+                                        <label class="form-check-label">Nuevo</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio1" checked>
+                                        <label class="form-check-label">control</label>
+                                    </div>
+                                </div>
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Motivo de Consulta</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Antecedentes Familiares</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                        <div class="row">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Envio</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Origen</label>
+                                    <select class="form-control select2" style="width: 50%;">
+                                        <option selected="selected">Guardia</option>
+                                        <option>Sala 6</option>
+                                        <option>Sala 2</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Destino</label>
+                                    <select class="form-control select2" style="width: 50%;">
+                                        <option selected="selected">Guardia</option>
+                                        <option>Sala 6</option>
+                                        <option>Sala 2</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Diagnostico</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Hipotesis Diagnostica</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Resumen del Caso</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Estado de la Interconsulta ?</label>
+                                <select class="form-control select2" style="width: 50%;">
+                                    <option selected="selected">Incompleto</option>
+                                    <option>Completo</option>
+                                    <option>En tratamiento</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn  btn-warning">
+                            GUARDAR
+                        </button>&nbsp;
+                        <button type="button" class="btn btn-danger">
+                            CANCELAR
+                        </button>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Historial de Atenciones</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="card-body">
+                    </div>
+                </div>
             </div>
 
         </div>

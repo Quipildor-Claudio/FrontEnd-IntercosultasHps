@@ -44,11 +44,11 @@
                 <tr>
                   <th>Num</th>
                   <th>Nombres</th>
-                  <th>Especialidad</th>
                   <th>Servicio</th>
-                  <th>Dni</th>
+                  <th>Funcion</th>
+                  <th>Titulo</th>
                   <th>Mat</th>
-                  <th>Telefono</th>
+                  <th>Cuil</th>
                   <th>Acciones</th>
 
                 </tr>
@@ -57,12 +57,12 @@
                @for (item of medicos; track $index) {
                 <tr>
                   <td>{{$index}}</td>
-                  <td>{{item.nombre_medico}}</td>
-                  <td>{{item.especialidad_medico}}</td>
-                  <td>{{''}}</td>
-                  <td>{{item.dni_medico}}</td>
-                  <td>{{item.mp_medico}}</td>
-                  <td>{{item.telefono_medico}}</td>
+                  <td>{{item.apellido}}&nbsp;{{item.nombre}}</td>
+                  <td>{{item.servicio}}</td>
+                  <td>{{item.funcion}}</td>
+                  <td>{{item.titulo}}</td>
+                  <td>{{item.matricula}}</td>
+                  <td>{{item.cuil}}</td>
                   <td>
                     <div class="btn-group">
                       <button type="button" class="btn  btn-warning" [routerLink]="['/formproducto',item.id]">
