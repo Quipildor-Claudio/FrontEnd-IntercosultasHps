@@ -13,7 +13,7 @@ export class PacientesListComponent  implements OnInit{
   pacientes?: Paciente[];
   currentPaciente: Paciente = new Paciente();
   currentIndex = -1;
-  title = 'Listado de Pacientes';
+  title = 'Pacientes';
   constructor(private pacienteService:PacienteService){}
   ngOnInit(): void {
       this.getAllData();

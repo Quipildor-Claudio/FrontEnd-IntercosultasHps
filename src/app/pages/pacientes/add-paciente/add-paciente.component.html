@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Inicio</h1>
+          <h1 class="m-0">{{title}}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -33,36 +33,48 @@
 
               <div class="row">
 
-                <div class="form-group">
-                  <label for="dni">DNI:</label>
-                  <input id="dni" formControlName="dni" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="nombre">Nombres:</label>
-                  <input id="nombre" formControlName="nombre" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="apellido">Apellidos:</label>
-                  <input id="apellido" formControlName="apellido" class="form-control">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="dni">DNI:</label>
+                    <input id="dni" formControlName="dni" class="form-control">
+                  </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="fecha_nac">Fecha de Nacimiento:</label>
-                  <input id="fecha_nac" formControlName="fecha_nac" type="date" class="form-control"
-                    class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="sexo">Sexo:</label>
-                  <input id="sexo" formControlName="sexo" class="form-control" class="form-control">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="nombre">Nombres:</label>
+                    <input id="nombre" formControlName="nombre" class="form-control">
+                  </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="domicilio_pcte">Domicilio:</label>
-                  <input id="domicilio_pcte" formControlName="domicilio_pcte" class="form-control">
-                </div>
-                <div class="col-sm-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="apellido">Apellidos:</label>
+                    <input id="apellido" formControlName="apellido" class="form-control">
+                  </div>
                 </div>
 
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="fecha_nac">Fecha de Nacimiento:</label>
+                    <input id="fecha_nac" formControlName="fecha_nac" type="date" class="form-control"
+                      class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="sexo">Sexo:</label>
+                    <input id="sexo" formControlName="sexo" class="form-control" class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="domicilio_pcte">Domicilio:</label>
+                    <input id="domicilio_pcte" formControlName="domicilio_pcte" class="form-control">
+                  </div>
+                </div>
 
 
               </div>
@@ -77,19 +89,19 @@
                 </div>
 
                 <div class="col-sm-3">
-
                   <div class="form-group">
                     <label for="man_dom">Manzana:</label>
                     <input id="man_dom" formControlName="man_dom" type="number" class="form-control-sm">
                   </div>
                 </div>
-                <div class="col-sm-3">
 
+                <div class="col-sm-3">
                   <div class="form-group">
                     <label for="lote_dom">Lote:</label>
                     <input id="lote_dom" formControlName="lote_dom" type="number" class="form-control-sm">
                   </div>
                 </div>
+
               </div>
 
 

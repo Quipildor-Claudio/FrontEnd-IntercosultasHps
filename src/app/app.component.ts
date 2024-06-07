@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   constructor(private medicoService:MedicoService){}
 
   ngOnInit(): void {
-      this.getMedico('666110bfa844653e1052738c');
+      this.getMedico('66630635490fa822d31c5284');
   }
 
   getMedico(id: string): void {
