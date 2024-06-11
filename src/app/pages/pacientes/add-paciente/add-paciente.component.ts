@@ -14,7 +14,7 @@ export class AddPacienteComponent implements OnInit {
   pacienteForm: FormGroup;
   title: string = "Nuevo Paciente"
   paciente: Paciente;
-  constructor(private fb: FormBuilder,private pacienteService:PacienteService) {
+  constructor(private fb: FormBuilder, private pacienteService: PacienteService) {
     this.paciente = new Paciente();
 
   }
@@ -35,9 +35,11 @@ export class AddPacienteComponent implements OnInit {
       lote_dom: [null]
     });
 
+
+
   }
 
-    onSubmit(): void {
+  onSubmit(): void {
     if (this.pacienteForm.valid) {
       this.paciente = new Paciente(this.pacienteForm.value);
       console.log('Paciente data:', this.paciente);

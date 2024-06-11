@@ -26,7 +26,7 @@
           <div class="card-header">
             <h3 class="card-title">{{title}}</h3>
           </div>
-          <form [formGroup]="medicoForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="medicoForm">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="cuil">CUIL:</label>
+                    <label for="cuil">DNI / CUIL:</label>
                     <input id="cuil" formControlName="cuil" class="form-control" />
                   </div>
                 </div>
@@ -59,12 +59,26 @@
                     <input id="matricula" formControlName="matricula" class="form-control" />
                   </div>
                 </div>
+
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="servicio">Servicio:</label>
-                    <input id="servicio" formControlName="servicio" class="form-control" />
+            <!--         <select [compareWith]="compare" id="servicio" formControlName="servicio" class="form-select">
+                      @for (item of servicios; track item) {
+                      <option [ngvalue]="item">{{item.servicio}}</option>
+                      }
+                    </select> -->
+                  
+                      <select matNativeControl id="servicio" formControlName="servicio" name="servicio">
+                        <option value="" selected></option>
+                        @for (item of servicios; track item) {
+                          <option [ngvalue]="item.id">{{item.servicio}}</option>
+                        }
+                      </select>
+
                   </div>
                 </div>
+
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="funcion">Función:</label>
@@ -74,7 +88,8 @@
               </div>
             </div>
             <div class="card-footer">
-              <button type="submit" [disabled]="medicoForm.invalid" class="btn btn-info  ">Enviar</button>
+              <button type="submit" [disabled]="medicoForm.invalid" class="btn btn-info  "
+                (click)="onSubmit()">Enviar</button>
             </div>
           </form>
         </div>

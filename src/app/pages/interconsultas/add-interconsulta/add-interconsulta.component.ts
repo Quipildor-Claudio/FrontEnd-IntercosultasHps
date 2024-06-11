@@ -5,6 +5,7 @@ import { Paciente } from '../../../models/paciente';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Medico } from '../../../models/medico';
+import { Interconsulta } from '../../../models/interconsulta';
 
 @Component({
   selector: 'app-add-interconsulta',
@@ -18,11 +19,14 @@ export class AddInterconsultaComponent implements OnInit {
   patients: Paciente[] = [];
   patient:Paciente;
   medico:Medico;
+  currentInterconsulta:Interconsulta;
+  
   searchControl = new FormControl('');
 
   constructor(private medicoService: MedicoService,
     private pacienteService: PacienteService) {
       this.patient = new Paciente();
+      this.currentInterconsulta =  new Interconsulta();
 
       this.searchControl.valueChanges.pipe(
         debounceTime(800),
