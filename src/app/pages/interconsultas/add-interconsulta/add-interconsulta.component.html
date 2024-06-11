@@ -43,7 +43,6 @@
 
             </div>
             <!-- /.card -->
-
             <div class="col-md-6">
                 <!-- general form elements -->
                 <div class="card card-info">
@@ -58,7 +57,8 @@
                         <strong>Nombres:</strong>&nbsp; {{patient.apellido}}&nbsp; {{patient.nombre}}<br>
                         <strong>Edad:</strong>&nbsp; {{patient.edad}}<br>
                         <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac}}<br>
-                        <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
+                        <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp;
+                        {{patient.numero_dom}}<br>
 
                     </div>
                     <!-- /.card-body -->
@@ -74,51 +74,52 @@
                         <h3 class="card-title">Nueva Interconsultas</h3>
                     </div>
                     <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Tipo de Consulta</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radio1" checked>
-                                        <label class="form-check-label">Nuevo</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radio1" checked>
-                                        <label class="form-check-label">control</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Anadir Estudio</label>
-                                
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label>Motivo de Consulta</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                </div>
-                            </div>
-                     
-                 
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="btn-group">
-                            <button type="button" class="btn  btn-warning">
-                                GUARDAR
-                            </button>&nbsp;
-                            <button type="button" class="btn btn-danger">
-                                CANCELAR
-                            </button>
 
+                    <form >
+                        <!-- form start -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Tipo de Interconsulta</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="tipo">
+                                        <label for="customCheckbox2" class="custom-control-label"  >Nueva</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="tipo">
+                                        <label for="customCheckbox3" class="custom-control-label"  >Seguimiento</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Motivo de Consulta</label>
+                                        <textarea class="form-control" rows="3" placeholder="Enter ..."
+                                            id="descripcion" [(ngModel)]="currentInterconsulta.descripcion" name="descripcion"></textarea>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
-                    </div>
+                        <div class="card-footer">
+                            <div class="btn-group">
+                                <button type="button" class="btn  btn-warning" (click)="save()">
+                                    GUARDAR
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-danger"  (click)="cancel()">
+                                    CANCELAR
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
                 </div>
+
+
             </div>
+
 
 
             <div class="col-md-12">
