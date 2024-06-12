@@ -57,13 +57,13 @@ export class AddInterconsultaComponent implements OnInit {
 
   save(): void {
 
-    this.currentInterconsulta.paciente = this.patient;
-    this.currentInterconsulta.medico = JSON.parse(sessionStorage.getItem('medico')) as Medico;
+    this.currentInterconsulta.id_paciente = this.patient;
+    this.currentInterconsulta.id_medico = JSON.parse(sessionStorage.getItem('medico')) as Medico;
     this.currentInterconsulta.tipo = "Nueva";
     console.log(this.currentInterconsulta);
 
     this.interconsultaService.create(this.currentInterconsulta).subscribe(res=>{
-      console.log("respuesta :"+res);
+      console.log("respuesta"+res);
     });
 
 

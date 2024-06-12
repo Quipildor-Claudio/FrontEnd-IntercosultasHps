@@ -10,7 +10,7 @@ import { AddPacienteComponent } from './pages/pacientes/add-paciente/add-pacient
 
 export const routes: Routes = [
     {path:'',component:LoginComponent},
-    {path:'login',component:LoginComponent},
+    {path:'auth',component:LoginComponent},
     
     {path:'admin',component:AdminComponent,children:[
         {path:'',component:AdminComponent},
