@@ -17,16 +17,19 @@ import { Medico } from './models/medico';
 export class AppComponent implements OnInit{
   title = 'FrontEnd-Interconsultas';
   currentMedico:Medico= new Medico();
+  medico:Medico = new Medico();
   constructor(private medicoService:MedicoService){}
 
   ngOnInit(): void {
-      this.getMedico('66630635490fa822d31c5284');
+      this.getMedico('6668438d762f85a14f5001e1');
+      this.medico;
   }
 
   getMedico(id: string): void {
     this.medicoService.get(id).subscribe({
       next: (data) => {
         this.currentMedico = data;
+        this.medico=data;
         sessionStorage.setItem('medico',JSON.stringify (data));
         console.log(data);
       },
