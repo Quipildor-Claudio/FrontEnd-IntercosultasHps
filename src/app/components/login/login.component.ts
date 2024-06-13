@@ -11,6 +11,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
+
+
 export class LoginComponent {
 
   constructor(private formBuilder:FormBuilder,private authService:AuthService,private router:Router){}
@@ -38,9 +41,10 @@ export class LoginComponent {
 
   signIn(e: Event) {
     e.preventDefault();
-
     this.authService.signIn(this.form.value).subscribe({
-      next: () => {
+      next: (res:any) => {
+        sessionStorage.setItem('key',JSON.stringify (res.id));
+        console.log(res.id)
         this.router.navigate(['/interconsulta']);
       },
       error: (error: HttpErrorResponse) => {

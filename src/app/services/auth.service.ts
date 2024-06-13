@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URI } from '../../../config/config';
-
+import { catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,15 @@ export class AuthService {
   }
 
   isAuthenticated() {
-    return this.http.get('/is-authenticated', { withCredentials: true, });
+    return this.http.get('/is-authenticated');
   }
+
+
+  isAuthorized(): boolean {
+    if (sessionStorage.getItem('key') != null) {
+      return true;
+    }
+    return false;
+  }
+
 }

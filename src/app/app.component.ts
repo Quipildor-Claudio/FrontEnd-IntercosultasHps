@@ -6,28 +6,34 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { MedicoService } from './services/medico.service';
 import { Medico } from './models/medico';
+import { AuthService } from './services/auth.service';
+import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FooterComponent,HeaderComponent,SidebarComponent],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, SidebarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'FrontEnd-Interconsultas';
-  currentMedico:Medico= new Medico();
-  constructor(private medicoService:MedicoService){}
+  currentMedico: Medico = new Medico();
+  constructor(private medicoService: MedicoService, private authService: AuthService) { }
 
   ngOnInit(): void {
-      this.getMedico('66630635490fa822d31c5284');
+
   }
+
+
+  
+
 
   getMedico(id: string): void {
     this.medicoService.get(id).subscribe({
       next: (data) => {
         this.currentMedico = data;
-        sessionStorage.setItem('medico',JSON.stringify (data));
+        sessionStorage.setItem('medico', JSON.stringify(data));
         console.log(data);
       },
       error: (e) => console.error(e)
