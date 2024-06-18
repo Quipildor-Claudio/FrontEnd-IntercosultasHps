@@ -9,8 +9,8 @@ export class Interconsulta {
     descripcion:string;
     lugar:string;
     tipo:string;
-    paciente:Paciente;
-    medico:Medico;
+    id_paciente:Paciente;
+    id_medico:Medico;
     estudios:Estudio[]=[];
     createdAt: Date;
     constructor(init?: Partial<Interconsulta>) {
