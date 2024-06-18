@@ -12,7 +12,7 @@ export class Interconsulta {
     paciente:Paciente;
     medico:Medico;
     estudios:Estudio[]=[];
-
+    createdAt: Date;
     constructor(init?: Partial<Interconsulta>) {
         Object.assign(this, init);
     }

@@ -16,7 +16,6 @@
 </div>
 <!-- /.content-header -->
 
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -28,19 +27,14 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Numero de Documento</label>
-                            <input [formControl]="searchControl" placeholder="Escribir  DNI" class="form-control">
+                            <input [formControl]="searchControl" placeholder="Escribir DNI" class="form-control" name="dni">
                         </div>
-
                     </div>
-
                     <!-- /.card-body -->
-
                 </div>
-
             </div>
             <!-- /.card -->
 
@@ -52,31 +46,40 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-
                     <div class="card-body">
                         <strong>Dni:</strong> &nbsp; {{patient.dni}}<br>
                         <strong>Nombres:</strong>&nbsp; {{patient.apellido}}&nbsp; {{patient.nombre}}<br>
                         <strong>Edad:</strong>&nbsp; {{patient.edad}}<br>
+<<<<<<< Updated upstream
                         <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac}}<br>
                         <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
 
+=======
+                        <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac | date:'dd/MM/yyyy'}} <br>
+                        <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
+>>>>>>> Stashed changes
                     </div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
             </div>
 
-
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Nueva Interconsultas</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
                     <div class="card-body">
                         <div class="row">
+<<<<<<< Updated upstream
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Tipo de Consulta</label>
@@ -100,11 +103,32 @@
                                 <div class="form-group">
                                     <label>Motivo de Consulta</label>
                                     <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+=======
+                            <div class="col-sm-12">
+                                <label>Tipo de Interconsulta</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="tipoNueva" name="tipo" (change)="isSelectedRole('Nueva')" checked>
+                                    <label for="tipoNueva" class="form-check-label">Nueva</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="tipoSeguimiento" name="tipo" (change)="isSelectedRole('Seguimiento')">
+                                    <label for="tipoSeguimiento" class="form-check-label">Seguimiento</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 input-group">
+                                <div class="form-group col-12">
+                                    <label class="">Estudio</label>
+                                    <input placeholder="Escribir estudio" class="form-control" [(ngModel)]="estudio.descripcion" name="estudio">
+>>>>>>> Stashed changes
                                 </div>
                             </div>
                      
                  
                         </div>
+<<<<<<< Updated upstream
                     </div>
                     <div class="card-footer">
                         <div class="btn-group">
@@ -121,6 +145,26 @@
             </div>
 
 
+=======
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Motivo de Consulta</label>
+                                    <textarea class="form-control" rows="3" placeholder="Escribir motivo" id="descripcion" [(ngModel)]="interconsulta.descripcion" name="descripcion"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning" (click)="save()">GUARDAR</button>&nbsp;
+                            <button type="button" class="btn btn-danger" (click)="cancel()">CANCELAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+>>>>>>> Stashed changes
             <div class="col-md-12">
                 <!-- general form elements -->
                 <div class="card card-info">
@@ -129,13 +173,32 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-
                     <div class="card-body">
-
+                        <table class="col-sm-12 table-bordered text-center me-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="pe-2 ps-2">Fecha</th>
+                                    <th scope="col" class="pe-2 ps-2 ">Medico</th>
+                                    <th scope="col" class="pe-2 ps-2">Diagnostico</th>
+                                    <th scope="col" class="pe-2 ps-2 hide-on-mobile">Estudios</th>
+                                    <th scope="col" class="pe-2 ps-2 hide-on-mobile">Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of interconsultas | filter:filterText">
+                                    <td>{{ item.createdAt | date:'dd/MM/yyyy'}}</td>
+                                    <td *ngIf="!item.medico">Sin medico asignado</td>
+                                    <td *ngFor="let med of item.id_medico">{{med.nombre}} {{med.apellido}}</td>
+                                    <td>{{ item.descripcion }}</td>
+                                    <td *ngIf="!item.estudios" class="hide-on-mobile">Sin estudios</td>
+                                    <td *ngFor="let estudio of item.estudios" class="hide-on-mobile">{{estudio.descripcion}}</td>
+                                    <td class="hide-on-mobile">{{ item.tipo }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

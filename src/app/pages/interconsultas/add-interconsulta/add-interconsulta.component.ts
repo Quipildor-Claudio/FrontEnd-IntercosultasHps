@@ -8,16 +8,28 @@ import { Medico } from '../../../models/medico';
 import { Interconsulta } from '../../../models/interconsulta';
 import { InterconsultaService } from '../../../services/interconsulta.service';
 import { Estudio } from '../../../models/estudio';
+<<<<<<< Updated upstream
+=======
+import { EstudioService } from '../../../services/estudio.service';
+import { FilterPipe } from '../../../pipes/filter.pipe'; 
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-add-interconsulta',
   standalone: true,
+<<<<<<< Updated upstream
   imports: [ReactiveFormsModule],
+=======
+  imports: [ReactiveFormsModule, FormsModule, CommonModule,FilterPipe],
+>>>>>>> Stashed changes
   templateUrl: './add-interconsulta.component.html',
   styleUrl: './add-interconsulta.component.css'
 })
 export class AddInterconsultaComponent implements OnInit {
   title: string = 'Nueva Interconsulta';
+<<<<<<< Updated upstream
   id:string= '6668438d762f85a14f5001e1' ;
   patients: Paciente[] = [];
   patient:Paciente;
@@ -26,8 +38,21 @@ export class AddInterconsultaComponent implements OnInit {
   interconsulta:Interconsulta;
 
   
+=======
+  filterText: any;
+  interconsultas:Interconsulta[]=[];
+  patients: Paciente[] = [];
+  patient: Paciente;
+  medico: Medico;
+  interconsulta: Interconsulta;
+  interconsultaForm: FormGroup;
+  tipoInterconsulta:string ='nueva';
+  estudio:Estudio;
+>>>>>>> Stashed changes
   searchControl = new FormControl('');
+  estudios:Estudio[]=[];
 
+<<<<<<< Updated upstream
   constructor(private medicoService: MedicoService, private pacienteService: PacienteService, private interconsultaService: InterconsultaService)
      {
       this.patient = new Paciente();
@@ -56,8 +81,103 @@ getMedico(id:string): void{
     error: (e) => console.error('Error al obtener el médico:', e)
   });
 }
+=======
+  constructor(private medicoService: MedicoService,private pacienteService: PacienteService, private fb: FormBuilder,private interconsultaService:InterconsultaService, private estudioService:EstudioService) {
+    this.patient = new Paciente();
+    this.estudio= new Estudio();
+    this.interconsulta = new Interconsulta();
+    this.interconsultaForm = this.fb.group({
+    });
+    this.searchPaciente();
+  }
+  ngOnInit(): void {
+    this.getEstudios();
+  };
 
+ getEstudios(){
+  this.estudioService.getAll().subscribe(data=>{this.estudios = data;});
+ }
 
+  searchPaciente(): void {
+
+    this.searchControl.valueChanges.pipe(
+      debounceTime(800),
+      distinctUntilChanged(),
+      switchMap((dni) => this.pacienteService.searchPatients(dni))
+    ).subscribe((patients) => {
+      if(patients[0]==null) {
+        Swal.fire({
+          title: 'ERROR EN LA BÚSQUEDA',
+          text: 'No se encontro al paciente',
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        });
+      }
+      else{
+      this.patient = patients[0];
+     this.generarHistorial();
+    }})
+  }
+  save(): void {
+    if(this.estudio.descripcion == null || this.estudio.descripcion == ' ') {
+      this.estudio.descripcion ='Sin estudio';    
+    }
+    this.interconsulta.id_paciente = this.patient;
+    this.interconsulta.id_medico = JSON.parse(sessionStorage.getItem('medico')) as Medico;
+    this.interconsulta.tipo = this.tipoInterconsulta;
+    this.interconsulta.estudios.push(this.estudio)
+    console.log(this.estudio);
+    console.log(this.interconsulta);
+    this.interconsultaService.create(this.interconsulta).subscribe(res=>{
+      Swal.fire(
+        'Éxito',
+        `Interconsulta: ${this.interconsulta.tipo}, creada!`,
+        'success'
+      )
+      console.log("respuesta"+res);
+      this.generarHistorial();
+      this.resetForm();
+    });
+  }
+
+  resetForm(): void {
+    this.interconsulta.descripcion='';
+    this.estudio.descripcion='';
+
+  }
+
+  isSelectedRole(tipo: string): void {
+    this.tipoInterconsulta = tipo;
+  }
+
+  cancel(): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si'});
+    this.resetForm();
+  }
+
+  generarHistorial(): void {
+    this.interconsultaService.getAll().subscribe(res => {
+      this.interconsultas = res;
+      this.filtrarInterconsultas();
+    });
+  }
+>>>>>>> Stashed changes
+
+  filtrarInterconsultas(): void {
+      this.interconsultas = this.interconsultas.filter(ic => ic.id_paciente._id === this.patient._id);
+      console.log('interconsultas filtradas:', this.interconsultas);
+  }
+
+<<<<<<< Updated upstream
   createInterconsulta() {
    
     this.interconsulta.lugar = 'servicio';
@@ -79,4 +199,6 @@ getMedico(id:string): void{
       }
     );
   }
+=======
+>>>>>>> Stashed changes
 }

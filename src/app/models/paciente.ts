@@ -1,5 +1,5 @@
 export class Paciente {
-    id: any;
+    _id: any;
     dni: string;
     nombre: string;
     apellido: string;
