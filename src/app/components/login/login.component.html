@@ -29,7 +29,34 @@
               </div>
             </div>
           </div>
+          @if(register){
+          <div class="row">
+            <div class="col">
+              <p>Ingresa su dni para asociar su usuario</p>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" (input)="onDniInput($event)" placeholder="DNI del Médico">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-id-card"></span>
+                  </div>
+                </div>
 
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <select [compareWith]="compare" class="form-control" formControlName="medico" id="medico" name="medico">
+                  <option value="" disabled selected>Seleccionar su nombre y apellido</option>
+                  @for (item of medicos; track item) {
+                  <option [value]="item._id">{{item.apellido}}&nbsp;{{item.nombre}}</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+          }
           <div class="row">
             <div class="col-4">
               <button type="submit" [class.inactive]="!form.valid" class="btn btn-danger btn-block">
@@ -37,8 +64,8 @@
               </button>
             </div>
             <!-- /.col -->
-
           </div>
+
 
         </form>
 

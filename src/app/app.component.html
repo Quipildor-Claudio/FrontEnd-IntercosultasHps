@@ -1,11 +1,15 @@
-<div class="wrapper">
-
-
-  <header-component></header-component>
-  <sidebar-component></sidebar-component>
-  <section class="content-wrapper">
-    <router-outlet></router-outlet>
-  </section>
-  <footer-component></footer-component>
-
+@if(authService.isAuthorized()){
+<div class="hold-transition sidebar-mini layout-fixed mat-typography">
+  <div class="wrapper">
+    <header-component></header-component>
+    <sidebar-component></sidebar-component>
+    <section class="content-wrapper">
+      <router-outlet></router-outlet>
+    </section>
+    <footer-component></footer-component>
+  </div>
 </div>
+}
+@if(!authService.isAuthorized()){
+  <router-outlet></router-outlet>
+}

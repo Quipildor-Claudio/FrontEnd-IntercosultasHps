@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a [routerLink]="['/admin']" class="brand-link">
+    <a [routerLink]="['/interconsulta']" class="brand-link">
         <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">Interconsultas HPS</span>
@@ -14,8 +14,9 @@
                 <img src="assets\dist\img\user10.png" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a [routerLink]="['/admin']" class="d-block">
-
+                <a [routerLink]="['/interconsulta']" class="d-block">
+                    {{currentMedico.apellido !== null? currentMedico.apellido:""}}&nbsp;{{currentMedico.nombre !==null?
+                    currentMedico.nombre:""}}
                 </a>
             </div>
         </div>
@@ -35,17 +36,10 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fa fa-flag-checkered"></i>
-                        <p>
-                            Seguimiento Interconsulta
+               
 
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li  class="nav-item">
+                    <a [routerLink]="['/interconsulta']" class="nav-link">
                         <i class="nav-icon fas fa-heart"></i>
                         <p>
                             Pacientes
@@ -69,8 +63,9 @@
                         </li>
                     </ul>
                 </li>
+              
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a [routerLink]="['/interconsulta']" class="nav-link">
                         <i class="nav-icon fas fa-user-md"></i>
                         <p>
                             Medicos
@@ -96,7 +91,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a [routerLink]="['/interconsulta']" class="nav-link">
                         <i class="nav-icon fas file-text"></i>
                         <p>
                             Reportes
@@ -105,7 +100,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/charts/chartjs.html" class="nav-link">
+                            <a [routerLink]="['/interconsulta']" class="nav-link">
                                 <p>ChartJS</p>
                             </a>
                         </li>

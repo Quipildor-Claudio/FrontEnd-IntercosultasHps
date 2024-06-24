@@ -30,5 +30,8 @@ export class MedicoService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${API_URI}/medico/${id}`);
   }
+  searchMedicoByDni(cuil:any):Observable<Medico[]>{
+    return this.http.get<Medico[]>(`${API_URI}/searchm?cuil=${cuil}`);
+  }
 
 }
