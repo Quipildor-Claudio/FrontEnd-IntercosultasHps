@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MedicoService } from '../../../services/medico.service';
 import { PacienteService } from '../../../services/paciente.service';
 import { Paciente } from '../../../models/paciente';
@@ -12,12 +12,13 @@ import { EstudioService } from '../../../services/estudio.service';
 import { FilterPipe } from '../../../pipes/filter.pipe'; 
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-add-interconsulta',
   standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './add-interconsulta.component.html',
+  imports: [ReactiveFormsModule, FormsModule, CommonModule,FilterPipe],
+  templateUrl:'./add-interconsulta.component.html',
   styleUrl: './add-interconsulta.component.css'
 })
 export class AddInterconsultaComponent implements OnInit {
@@ -26,7 +27,7 @@ export class AddInterconsultaComponent implements OnInit {
   interconsultas:Interconsulta[]=[];
   patients: Paciente[] = [];
   patient: Paciente;
-  medico: Medico;
+  medico: Medico = new Medico();
   interconsulta: Interconsulta;
   interconsultaForm: FormGroup;
   tipoInterconsulta:string ='nueva';
@@ -34,7 +35,8 @@ export class AddInterconsultaComponent implements OnInit {
   searchControl = new FormControl('');
   estudios:Estudio[]=[];
 
-  constructor(private medicoService: MedicoService,private pacienteService: PacienteService, private fb: FormBuilder,private interconsultaService:InterconsultaService, private estudioService:EstudioService) {
+
+  constructor(private medicoService: MedicoService, private uthService: AuthService, private pacienteService: PacienteService, private fb: FormBuilder,private interconsultaService:InterconsultaService, private estudioService:EstudioService) {
     this.patient = new Paciente();
     this.estudio= new Estudio();
     this.interconsulta = new Interconsulta();
@@ -44,6 +46,7 @@ export class AddInterconsultaComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getEstudios();
+    this.getMedicoCokkie();
   };
 
  getEstudios(){
@@ -78,7 +81,8 @@ export class AddInterconsultaComponent implements OnInit {
       this.estudio.descripcion ='Sin estudio';    
     }
     this.interconsulta.id_paciente = this.patient;
-    this.interconsulta.id_medico = JSON.parse(sessionStorage.getItem('medico')) as Medico;
+    this.interconsulta.id_medico = this.medico;
+
     this.interconsulta.tipo = this.tipoInterconsulta;
     this.interconsulta.estudios.push(this.estudio)
     console.log(this.estudio);
@@ -126,6 +130,14 @@ export class AddInterconsultaComponent implements OnInit {
   filtrarInterconsultas(): void {
       this.interconsultas = this.interconsultas.filter(ic => ic.id_paciente._id === this.patient._id);
       console.log('interconsultas filtradas:', this.interconsultas);
+  }
+
+  getMedicoCokkie() {
+    let id = JSON.parse(sessionStorage.getItem('key'));
+    this.medicoService.get(id).subscribe(res => {
+      this.medico = res; 
+      console.log('usuario:',this.medico);
+    });
   }
 
 }

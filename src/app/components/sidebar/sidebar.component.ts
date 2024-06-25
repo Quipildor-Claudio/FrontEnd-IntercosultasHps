@@ -25,7 +25,8 @@ export class SidebarComponent implements OnInit {
   getMedicoCokkie() {
     let id = JSON.parse(sessionStorage.getItem('key'));
     this.medicoService.get(id).subscribe(res => {
-      this.currentMedico = res;
+      this.currentMedico = res; 
+      console.log(res);
     });
   }
 }
