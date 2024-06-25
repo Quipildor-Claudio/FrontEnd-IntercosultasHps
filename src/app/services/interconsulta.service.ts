@@ -15,17 +15,10 @@ interface InterconsultaResponse {
 export class InterconsultaService {
 
   constructor(private http:HttpClient) { }
-<<<<<<< Updated upstream
-
-  getAll():Observable<any[]>{
-    return this.http.get(`${API_URI}/interconsultas`).pipe(
-      map(response=>response as any[])
-=======
   
   getAll():Observable<Interconsulta[]>{
     return this.http.get<InterconsultaResponse>(`${API_URI}/interconsultas`).pipe(
       map(response=>response.items)
->>>>>>> Stashed changes
     );
   }
   get(id: any): Observable<Interconsulta> {
