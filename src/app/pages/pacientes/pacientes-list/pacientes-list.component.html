@@ -54,13 +54,13 @@
               </tr>
             </thead>
             <tbody>
-             @for (item of pacientes; track $index) {
+              @for (item of pacientes; track $index) {
               <tr>
                 <td>{{$index}}</td>
                 <td>{{item.nombre}}&nbsp;{{item.apellido}}</td>
                 <td>{{item.dni}}</td>
                 <td>{{item.edad}}</td>
-                <td>{{item.fecha_nac}}</td>
+                <td>{{item.fecha_nac | date:'dd/MM/yyyy'}}</td>
                 <td>{{'NN'}}</td>
                 <td>{{item.domicilio_pcte}}&nbsp;{{item.numero_dom}}</td>
                 <td>
@@ -76,19 +76,33 @@
                 </td>
               </tr>
 
-             }
-           
-              
-
-
+              }
 
             </tbody>
           </table>
         </div>
-        <!-- /.card-body -->
+
       </div>
-      <!-- /.card -->
+      <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+ 
+          @if(totalPages>1){
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+              </li>
+              <li class="page-item" >
+                <span> &nbsp; Página {{ currentPage }} de {{ totalPages }} &nbsp;</span>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+              </li>
+            
+          }
+        </ul>
+      </div>
+      <!-- /.card-body -->
     </div>
+    <!-- /.card -->
   </div>
   <!-- /.row (main row) -->
 </div>

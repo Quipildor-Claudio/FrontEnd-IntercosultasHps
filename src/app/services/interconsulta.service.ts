@@ -36,4 +36,7 @@ export class InterconsultaService {
   delete(id: any): Observable<any> {
     return this.http.delete(`${API_URI}/interconsulta/${id}`);
   }
+  getInterconsultaByPaciente(id:any):Observable<Interconsulta[]>{
+    return this.http.get<Interconsulta[]>(`${API_URI}/interconsulta/paciente/${id}`);
+  }
 }
