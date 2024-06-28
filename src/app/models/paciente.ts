@@ -14,10 +14,8 @@ export class Paciente {
     numero_dom: number;
     man_dom: number;
     lote_dom: number
-
-
     constructor(init?: Partial<Paciente>) {
         Object.assign(this, init);
     }
-
 }
+

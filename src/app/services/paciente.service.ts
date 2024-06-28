@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { API_URI } from '../../../config/config';
 import { Observable, map } from 'rxjs';
 import { Paciente } from '../models/paciente';
+import { PaginatedResponse } from '../models/paginatedResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class PacienteService {
       map(response=>response as any[])
     );
   }
+
+  getPacientes(page: number = 1, limit: number = 10): Observable<PaginatedResponse<Paciente>> {
+    return this.http.get<PaginatedResponse<Paciente>>(`${API_URI}/pacientes/?page=${page}&limit=${limit}`);
+  }
+
   get(id: any): Observable<Paciente> {
     return this.http.get<Paciente>(`${API_URI}/paciente/${id}`);
   }

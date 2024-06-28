@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { API_URI } from '../../../config/config';
 import { Medico } from '../models/medico';
-
+import { PaginatedResponse } from '../models/paginatedResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +15,10 @@ export class MedicoService {
       map(response=>response as any[])
     );
   }
+  getMedicos(page: number = 1, limit: number = 10): Observable<PaginatedResponse<Medico>> {
+    return this.http.get<PaginatedResponse<Medico>>(`${API_URI}/medicos/?page=${page}&limit=${limit}`);
+  }
+
   get(id: any): Observable<Medico> {
     return this.http.get<Medico>(`${API_URI}/medico/${id}`);
   }
