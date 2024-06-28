@@ -88,9 +88,33 @@
 
                         <div class="row">
                             <div class="col-12 input-group">
-                                <div class="form-group col-12">
-                                    <label class="">Estudio</label>
+                                <label class="">Estudio</label>
+                                <div class="input-group col-12">
                                     <input placeholder="Escribir estudio" class="form-control" [(ngModel)]="estudio.descripcion" name="estudio">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-info btn-flat" (click)="saveEstudios()">Agregar</button>
+                                        </span>
+                                </div>
+
+                                <!--PRUEBA DE ESTUDIOS-->
+                                <div class="d-flex" *ngIf="estudios.length>-1">
+                                    <div class="card card-none" *ngFor="let estudi of interconsulta.estudios">
+                                        <div class="card-header" >
+                                          <h3 class="card-title p-0"> {{estudi.descripcion}} </h3>
+                                          <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="remove" (click)="deleteEstudios(estudi.descripcion)"><i class="fas fa-times"></i>
+                                            </button>
+                                          </div>
+                                          <!-- /.card-tools -->
+                                        </div>
+                                        <!-- /.card-header -->
+                                      </div>
+                                      <!-- /.card -->
+    
+                                    <div>
+                                </div>
+                               
+
                                 </div>
                             </div>
                      
@@ -137,11 +161,11 @@
                                 <tr *ngFor="let item of interconsultas | filter:filterText">
                                     <td>{{ item.createdAt | date:'dd/MM/yyyy'}}</td>
                                     <td *ngIf="!item.id_medico">Sin medico asignado</td>
-                                    <td >{{item.id_medico.apellido}}, {{item.id_medico.nombre}}</td>
+                                    <td *ngIf="item.id_medico">{{item.id_medico.apellido}}, {{item.id_medico.nombre}}</td>
                                     <td>{{ item.descripcion }}</td>
-                                    <td *ngIf="!item.estudios" class="hide-on-mobile">Sin estudios</td>
+                                    <td *ngIf="!estudios" class="hide-on-mobile">Sin estudios</td>
                                     <td class="hide-on-mobile">       
-                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio._id }}</li></ul>
+                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion}}</li></ul>
                                 </td>
                                     <td class="hide-on-mobile">{{ item.tipo }}</td>
                                 </tr>
