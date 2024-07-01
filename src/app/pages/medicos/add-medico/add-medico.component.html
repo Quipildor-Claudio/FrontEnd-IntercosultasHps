@@ -69,8 +69,8 @@
                       }
                     </select> -->
                   
-                      <select matNativeControl id="servicio" formControlName="servicio" name="servicio">
-                        <option value="" selected></option>
+                      <select matNativeControl id="servicio" formControlName="servicio" name="servicio" class="custom-select">
+                        <option value="" selected>Seleccionar Servicio</option>
                         @for (item of servicios; track item) {
                           <option [ngvalue]="item.id">{{item.servicio}}</option>
                         }
