@@ -141,7 +141,7 @@
                                     <td>{{ item.descripcion }}</td>
                                     <td *ngIf="!item.estudios" class="hide-on-mobile">Sin estudios</td>
                                     <td class="hide-on-mobile">       
-                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio._id }}</li></ul>
+                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion }}</li></ul>
                                 </td>
                                     <td class="hide-on-mobile">{{ item.tipo }}</td>
                                 </tr>
