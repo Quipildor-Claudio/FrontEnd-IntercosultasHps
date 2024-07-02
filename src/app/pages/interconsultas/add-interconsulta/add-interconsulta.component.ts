@@ -13,6 +13,7 @@ import { FilterPipe } from '../../../pipes/filter.pipe';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../services/auth.service';
+import { AlertServiceService } from '../../../services/alert-service.service';
 
 @Component({
   selector: 'app-add-interconsulta',
@@ -36,7 +37,12 @@ export class AddInterconsultaComponent implements OnInit {
   estudios: Estudio[] = [];
 
 
-  constructor(private medicoService: MedicoService, private uthService: AuthService, private pacienteService: PacienteService, private fb: FormBuilder, private interconsultaService: InterconsultaService, private estudioService: EstudioService) {
+  constructor(private medicoService: MedicoService, 
+    private pacienteService: PacienteService,
+    private fb: FormBuilder,
+    private interconsultaService: InterconsultaService,
+    private estudioService: EstudioService,
+    private alertService: AlertServiceService) {
     this.patient = new Paciente();
     this.estudio = new Estudio();
     this.interconsulta = new Interconsulta();
@@ -45,6 +51,20 @@ export class AddInterconsultaComponent implements OnInit {
     this.searchPaciente();
   }
   ngOnInit(): void {
+    if (this.alertService.shouldShowAlertAfterRegistration()) {
+      Swal.fire({
+        title: "Por favor, actualice sus datos personales.",
+        width: 600,
+        padding: "3em",
+        color: "#716add",
+        background: "#fff ",
+        backdrop: `
+        rgba(0,0,123,0.4)
+        left top
+        no-repeat
+      `
+      });
+    }
     this.getEstudios();
     this.getMedicoCokkie();
   };
