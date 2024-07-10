@@ -2,11 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { PaginatedResponse } from '../../models/paginatedResponse';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule ,FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
@@ -17,8 +19,14 @@ export class UsuariosComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 1;
   limit: number = 10;
-  editingUser: any = null;
-  constructor(private userService: UserService) { }
+  userForm: FormGroup;
+  constructor(private userService: UserService,private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      role: ['', Validators.required]
+    });
+   }
 
   ngOnInit(): void {
     this.loadUsers();
@@ -35,9 +43,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  editUser(user: any): void {
-    this.editingUser = { ...user };
-  }
+
 
   changePage(page: number): void {
     this.currentPage = page;

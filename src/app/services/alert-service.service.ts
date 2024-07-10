@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AlertServiceService {
   private alertAfterRegistration: boolean = false;
-
+  private alertPaciente:Boolean=false;
   constructor() { }
 
   showAlertAfterRegistration() {
@@ -16,5 +16,9 @@ export class AlertServiceService {
     const showAlert = this.alertAfterRegistration;
     this.alertAfterRegistration = false; // Reset the flag after checking
     return showAlert;
+  }
+
+  showAlertPaciente(){
+    this.alertPaciente = true;
   }
 }

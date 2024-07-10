@@ -4,6 +4,7 @@ import { PacienteService } from '../../../services/paciente.service';
 import { PaginatedResponse } from '../../../models/paginatedResponse';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from '../../../pipes/filter.pipe';
+import { AlertServiceService } from '../../../services/alert-service.service';
 @Component({
   selector: 'app-pacientes-list',
   standalone: true,
@@ -20,7 +21,7 @@ export class PacientesListComponent implements OnInit {
   currentPage: number = 1;
   limit: number = 10;
 
-  constructor(private pacienteService: PacienteService) { }
+  constructor(private pacienteService: PacienteService,private alertService:AlertServiceService) { }
 
   ngOnInit(): void {
     this.loadPacientes();

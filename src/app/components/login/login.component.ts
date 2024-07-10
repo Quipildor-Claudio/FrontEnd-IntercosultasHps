@@ -101,10 +101,10 @@ export class LoginComponent implements OnInit {
               title: "Usuario Registrado",
               width: 600,
               padding: "3em",
-              color: "#716add",
-              background: "#fff ",
+              color: "#000000",
+              background: "#FFFFFF",
               backdrop: `
-              rgba(0,0,123,0.4)
+              rgba(16, 202, 237, 0.4)        
               left top
               no-repeat
             `
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
             this.alertService.showAlertAfterRegistration();
           },
           error: (error: HttpErrorResponse) => {
-            if(error.status == 400){
+            if (error.status == 400) {
               Swal.fire({
                 title: "El usuario ya existe",
                 width: 600,
@@ -128,7 +128,7 @@ export class LoginComponent implements OnInit {
                 no-repeat
               `
               });
-  
+
             }
             console.error(error);
           },
@@ -146,7 +146,7 @@ export class LoginComponent implements OnInit {
     this.authService.signIn(this.form.value).subscribe({
       next: (res: any) => {
         sessionStorage.setItem('key', JSON.stringify(res.id));
-   
+
         this.router.navigate(['/interconsulta']);
       },
       error: (error: HttpErrorResponse) => {
