@@ -18,8 +18,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-interconsulta',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule,  FilterPipe],
-  templateUrl:  './add-interconsulta.component.html',
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, FilterPipe],
+  templateUrl: './add-interconsulta.component.html',
   styleUrls: ['./add-interconsulta.component.css']
 })
 export class AddInterconsultaComponent implements OnInit {
@@ -52,7 +52,7 @@ export class AddInterconsultaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMedicoCokkie();
+    this.getMedicoCookie();
 
     if (this.alertService.shouldShowAlertAfterRegistration()) {
       Swal.fire({
@@ -83,23 +83,6 @@ export class AddInterconsultaComponent implements OnInit {
     ).subscribe((patients) => {
       console.log(patients);
       if (patients[0] == null) {
-        Swal.fire({
-          title: 'ERROR EN LA BÚSQUEDA',
-          text: 'No se encontró al paciente',
-          icon: 'error',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ok'
-        });
-      } else {
-        this.patient = patients[0];
-        this.generarHistorial();
-      }
-    })
-  }
-
-  // estudios
         this.banVacio = true;
       }
       else {
@@ -141,7 +124,7 @@ export class AddInterconsultaComponent implements OnInit {
     }
     console.log('estudios guardados', this.interconsulta.estudios)
   }
-
+ 
   deleteEstudios(id: string) {
     console.log(id)
     const index = this.interconsulta.estudios.findIndex(estudio => {
