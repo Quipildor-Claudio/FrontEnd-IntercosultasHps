@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URI } from '../../../config/config';
-import { catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,8 @@ export class AuthService {
     });
   }
 
-  signUp(credentials: { username: string; password: string }) {
-    return this.http.post(`${API_URI}/register`, credentials, {
+  signUp(user:any) {
+    return this.http.post(`${API_URI}/register`,user, {
       withCredentials: true,
     });
   }

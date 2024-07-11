@@ -6,9 +6,14 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-
+        @if(loginError){
+        <p class="login-box-msg " style="color:red">Usuario o contraseña incorrecto </p>
+        }
+        @if(!loginError){
         <p class="login-box-msg">{{ register ? "Llena tus datos para registrarte" : "Ingresa para iniciar session" }}
         </p>
+
+        }
 
         <form (submit)="register ? signUp($event) : signIn($event)" [formGroup]="form">
 
@@ -18,6 +23,7 @@
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
+
             </div>
           </div>
 
@@ -29,29 +35,41 @@
               </div>
             </div>
           </div>
+
           @if(register){
           <div class="row">
             <div class="col">
-              <p>Ingresa su dni para asociar su usuario</p>
+              <p>Ingresar sus datos para registrarse</p>
               <div class="input-group mb-3">
-                <input type="text" class="form-control" (input)="onDniInput($event)" placeholder="DNI del Médico">
+                <input type="text" formControlName="apellido" class="form-control" placeholder="Ingrese su apellidos" />
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <span class="fas fa-id-card"></span>
                   </div>
                 </div>
-
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
               <div class="input-group mb-3">
-                <select [compareWith]="compare" class="form-control" formControlName="medico" id="medico" name="medico">
-                  <option value="" disabled selected>Seleccionar su nombre y apellido</option>
-                  @for (item of medicos; track item) {
-                  <option [value]="item._id">{{item.apellido}}&nbsp;{{item.nombre}}</option>
-                  }
+                <input type="text" formControlName="nombre" class="form-control" placeholder="Ingrese su nombres" />
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-id-card"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" formControlName="dni" placeholder="Ingresar su dni">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-id-card"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <select id="servicio" formControlName="servicio" class="custom-select">
+                  <option value="" disabled selected>Seleccionar Servicio</option>
+                  <option *ngFor="let item of servicios" [value]="item.servicio">
+                    {{ item.servicio}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -59,14 +77,12 @@
           }
           <div class="row">
             <div class="col-4">
-              <button type="submit" [class.inactive]="!form.valid" class="btn btn-danger btn-block">
+              <button type="submit" [disabled]="form.invalid" class="btn btn-danger btn-block">
                 {{ register ? "Registrar" : "Ingresar" }}
               </button>
             </div>
             <!-- /.col -->
           </div>
-
-
         </form>
 
         <div class="social-auth-links text-center mb-3">

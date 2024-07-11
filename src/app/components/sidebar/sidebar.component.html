@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4"  >
     <!-- Brand Logo -->
     <a [routerLink]="['/interconsulta']" class="brand-link">
         <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -20,8 +20,6 @@
                 </a>
             </div>
         </div>
-
-
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -92,6 +90,20 @@
 
                 <li class="nav-item">
                     <a  class="nav-link">
+                    <a [routerLink]="['/usuarios']" class="nav-link">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            Usuarios
+                            <i class="right fas fa-angle-left"></i>
+
+                        </p>
+                    </a>
+                    </a>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a [routerLink]="['/interconsulta']" class="nav-link">
                         <i class="nav-icon fas file-text"></i>
                         <p>
                             Reportes
@@ -108,7 +120,6 @@
 
                     </ul>
                 </li>
-
 
             </ul>
         </nav>

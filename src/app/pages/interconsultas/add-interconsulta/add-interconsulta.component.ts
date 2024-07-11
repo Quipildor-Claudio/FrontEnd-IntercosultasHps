@@ -12,13 +12,14 @@ import { EstudioService } from '../../../services/estudio.service';
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { AuthService } from '../../../services/auth.service';
+import { AlertServiceService } from '../../../services/alert-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-interconsulta',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, FilterPipe],
-  templateUrl: './add-interconsulta.component.html',
+  imports: [ReactiveFormsModule, FormsModule, CommonModule,  FilterPipe],
+  templateUrl:  './add-interconsulta.component.html',
   styleUrls: ['./add-interconsulta.component.css']
 })
 export class AddInterconsultaComponent implements OnInit {
@@ -34,8 +35,15 @@ export class AddInterconsultaComponent implements OnInit {
   estudio: Estudio;
   searchControl = new FormControl('');
   estudios: Estudio[] = [];
+  banVacio: boolean = false;
 
-  constructor(private medicoService: MedicoService, private authService: AuthService, private pacienteService: PacienteService, private fb: FormBuilder, private interconsultaService: InterconsultaService, private estudioService: EstudioService) {
+  constructor(private medicoService: MedicoService,
+    private pacienteService: PacienteService,
+    private fb: FormBuilder,
+    private interconsultaService: InterconsultaService,
+    private estudioService: EstudioService,
+    private alertService: AlertServiceService,
+    private router: Router) {
     this.patient = new Paciente();
     this.estudio = new Estudio();
     this.interconsulta = new Interconsulta();
@@ -44,8 +52,24 @@ export class AddInterconsultaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMedicoCookie();
-  }
+    this.getMedicoCokkie();
+
+    if (this.alertService.shouldShowAlertAfterRegistration()) {
+      Swal.fire({
+        title: "Por favor, actualice sus datos personales.",
+        width: 600,
+        padding: "3em",
+        color: "#000000",
+        background: "#FFFFFF",
+        backdrop: `
+        rgba(16, 202, 237, 0.4) 
+        left top
+        no-repeat
+      `
+      });
+    }
+    this.getEstudios();
+  };
 
   getEstudios() {
     this.estudioService.getAll().subscribe(data => { this.estudios = data; });
@@ -53,10 +77,11 @@ export class AddInterconsultaComponent implements OnInit {
 
   searchPaciente(): void {
     this.searchControl.valueChanges.pipe(
-      debounceTime(800),
+      debounceTime(600),
       distinctUntilChanged(),
       switchMap((dni) => this.pacienteService.searchPatients(dni))
     ).subscribe((patients) => {
+      console.log(patients);
       if (patients[0] == null) {
         Swal.fire({
           title: 'ERROR EN LA BÚSQUEDA',
@@ -75,6 +100,16 @@ export class AddInterconsultaComponent implements OnInit {
   }
 
   // estudios
+        this.banVacio = true;
+      }
+      else {
+        this.patient = patients[0];
+        this.banVacio=false;
+        this.generarHistorial();
+      }
+    })
+  }
+  //estudios
   saveEstudios() {
     if (this.estudio.descripcion != null && this.estudio.descripcion.trim() !== '') {
       // Verificar si ya existe un estudio con la misma descripción
@@ -107,16 +142,17 @@ export class AddInterconsultaComponent implements OnInit {
     console.log('estudios guardados', this.interconsulta.estudios)
   }
 
-  deleteEstudios(descripcion: string) {
-    console.log('Descripción a borrar', descripcion);
-    const index = this.interconsulta.estudios.findIndex(estudio => estudio.descripcion === descripcion);
-    if (index !== -1) {
-      console.log('Estudio a borrar:', this.interconsulta.estudios[index]);
-      this.interconsulta.estudios.splice(index, 1);
-      console.log('Estudios finales', this.interconsulta.estudios);
-    } else {
-      console.log('No se encontró el estudio con la descripción proporcionada.');
+  deleteEstudios(id: string) {
+    console.log(id)
+    const index = this.interconsulta.estudios.findIndex(estudio => {
+      estudio._id === id;
+      console.log('estudio a borrar:', this.estudio)
     }
+
+    );
+    this.interconsulta.estudios.splice(index, 1);
+    console.log('estudios finales', this.interconsulta.estudios)
+
   }
 
   save(): void {
@@ -180,5 +216,8 @@ export class AddInterconsultaComponent implements OnInit {
       this.medico = res;
       console.log('usuario:', this.medico);
     });
+  }
+  nuevoPaciente():void{
+    this.router.navigate(['/paciente']);
   }
 }

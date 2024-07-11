@@ -46,13 +46,25 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <div class="card-body">
-                        <strong>Dni:</strong> &nbsp; {{patient.dni}}<br>
-                        <strong>Nombres:</strong>&nbsp; {{patient.apellido}}&nbsp; {{patient.nombre}}<br>
-                        <strong>Edad:</strong>&nbsp; {{patient.edad}}<br>
-                        <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac | date:'dd/MM/yyyy'}} <br>
-                        <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
-                    </div>
+                     @if(!banVacio){
+                        <div class="card-body">
+                            <strong>Dni:</strong> &nbsp; {{patient.dni}}<br>
+                            <strong>Nombres:</strong>&nbsp; {{patient.apellido}}&nbsp; {{patient.nombre}}<br>
+                            <strong>Edad:</strong>&nbsp; {{patient.edad}}<br>
+                            <strong>Fecha Nacimiento:</strong>&nbsp; {{patient.fecha_nac | date:'dd/MM/yyyy'}} <br>
+                            <strong>Direccion:</strong> &nbsp; {{patient.domicilio_pcte}} &nbsp; {{patient.numero_dom}}<br>
+                        </div>
+                     }
+                     @if(banVacio){
+                        <div class="card-body">
+                            <strong>Paciente no encontrado en la base de datos !</strong>
+                            <br>
+                            <br>
+
+                            <button type="button" class="btn btn-info" (click)="nuevoPaciente()" >Agregar Paciente</button>
+                        </div>
+                     }
+ 
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
@@ -164,7 +176,7 @@
                                     <td>{{ item.descripcion }}</td>
                                     <td *ngIf="!estudios" class="hide-on-mobile">Sin estudios</td>
                                     <td class="hide-on-mobile">       
-                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion}}</li></ul>
+                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion }}</li></ul>
                                 </td>
                                     <td class="hide-on-mobile">{{ item.tipo }}</td>
                                 </tr>
