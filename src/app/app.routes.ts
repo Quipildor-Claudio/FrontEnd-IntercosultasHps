@@ -7,6 +7,7 @@ import { AddInterconsultaComponent } from './pages/interconsultas/add-interconsu
 import { MedicosListComponent } from './pages/medicos/medicos-list/medicos-list.component';
 import { AddMedicoComponent } from './pages/medicos/add-medico/add-medico.component';
 import { AddPacienteComponent } from './pages/pacientes/add-paciente/add-paciente.component';
+import { ReportesComponent } from './pages/reportes/reportes.component';
 
 export const routes: Routes = [
     {path:'',component:LoginComponent},
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path:'paciente',component:AddPacienteComponent},
 
 
+    {path:'reportes',component:ReportesComponent},
 
     {path:'interconsulta',component:AddInterconsultaComponent},
 

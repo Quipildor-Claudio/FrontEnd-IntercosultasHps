@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { API_URI } from '../../../config/config';
 import { Interconsulta } from '../models/interconsulta';
+import { PaginatedResponse } from '../models/paginatedResponse';
 interface InterconsultaResponse {
   items: Interconsulta[];
   totalItems: number;
@@ -38,5 +39,9 @@ export class InterconsultaService {
   }
   getInterconsultaByPaciente(id:any):Observable<Interconsulta[]>{
     return this.http.get<Interconsulta[]>(`${API_URI}/interconsulta/paciente/${id}`);
+  }
+
+  getInterconsultas(page: number = 1, limit: number = 10): Observable<PaginatedResponse<Interconsulta>> {
+    return this.http.get<PaginatedResponse<Interconsulta>>(`${API_URI}/interconsultas/?page=${page}&limit=${limit}`);
   }
 }

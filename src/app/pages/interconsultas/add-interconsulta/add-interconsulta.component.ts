@@ -17,9 +17,9 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-add-interconsulta',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule,FilterPipe],
-  templateUrl:'./add-interconsulta.component.html',
-  styleUrl: './add-interconsulta.component.css'
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, FilterPipe],
+  templateUrl: './add-interconsulta.component.html',
+  styleUrls: ['./add-interconsulta.component.css']
 })
 export class AddInterconsultaComponent implements OnInit {
   title: string = 'Nueva Interconsulta';
@@ -33,10 +33,9 @@ export class AddInterconsultaComponent implements OnInit {
   tipoInterconsulta: string = 'nueva';
   estudio: Estudio;
   searchControl = new FormControl('');
-  estudios:Estudio[]=[];
+  estudios: Estudio[] = [];
 
-
-  constructor(private medicoService: MedicoService, private uthService: AuthService, private pacienteService: PacienteService, private fb: FormBuilder,private interconsultaService:InterconsultaService, private estudioService:EstudioService) {
+  constructor(private medicoService: MedicoService, private authService: AuthService, private pacienteService: PacienteService, private fb: FormBuilder, private interconsultaService: InterconsultaService, private estudioService: EstudioService) {
     this.patient = new Paciente();
     this.estudio = new Estudio();
     this.interconsulta = new Interconsulta();
@@ -45,12 +44,12 @@ export class AddInterconsultaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getMedicoCokkie();
-  };
+    this.getMedicoCookie();
+  }
 
- getEstudios(){
-  this.estudioService.getAll().subscribe(data=>{this.estudios = data;});
- }
+  getEstudios() {
+    this.estudioService.getAll().subscribe(data => { this.estudios = data; });
+  }
 
   searchPaciente(): void {
     this.searchControl.valueChanges.pipe(
@@ -68,17 +67,33 @@ export class AddInterconsultaComponent implements OnInit {
           cancelButtonColor: '#d33',
           confirmButtonText: 'Ok'
         });
+      } else {
+        this.patient = patients[0];
+        this.generarHistorial();
       }
-      else{
-      this.patient = patients[0];
-     this.generarHistorial();
-    }})
+    })
   }
- //estudios
+
+  // estudios
   saveEstudios() {
     if (this.estudio.descripcion != null && this.estudio.descripcion.trim() !== '') {
-      this.interconsulta.estudios.push({ ...this.estudio });
-      this.estudio = new Estudio();
+      // Verificar si ya existe un estudio con la misma descripción
+      const exists = this.interconsulta.estudios.some(est => est.descripcion === this.estudio.descripcion);
+      if (!exists) {
+        this.interconsulta.estudios.push({ ...this.estudio });
+        this.estudio = new Estudio();
+        console.log('Estudio agregado');
+      } else {
+        Swal.fire({
+          title: 'Estudio duplicado',
+          text: 'El estudio ya existe en la lista.',
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        });
+      }
     } else {
       Swal.fire({
         title: 'Ingrese estudio',
@@ -89,47 +104,46 @@ export class AddInterconsultaComponent implements OnInit {
         confirmButtonText: 'Si'
       });
     }
-    console.log('estudios guardados',this.interconsulta.estudios)
+    console.log('estudios guardados', this.interconsulta.estudios)
   }
 
-  deleteEstudios(id: string) {
-    console.log(id)
-        const index = this.interconsulta.estudios.findIndex(estudio =>{
-          estudio._id === id;
-          console.log('estudio a borrar:',this.estudio)}
-          
-        );
-          this.interconsulta.estudios.splice(index, 1);
-        console.log('estudios finales',this.interconsulta.estudios)
-
+  deleteEstudios(descripcion: string) {
+    console.log('Descripción a borrar', descripcion);
+    const index = this.interconsulta.estudios.findIndex(estudio => estudio.descripcion === descripcion);
+    if (index !== -1) {
+      console.log('Estudio a borrar:', this.interconsulta.estudios[index]);
+      this.interconsulta.estudios.splice(index, 1);
+      console.log('Estudios finales', this.interconsulta.estudios);
+    } else {
+      console.log('No se encontró el estudio con la descripción proporcionada.');
+    }
   }
-  
+
   save(): void {
-    if(this.estudio.descripcion == null || this.estudio.descripcion == ' ') {
-      this.estudio.descripcion ='Sin estudio';    
+    if (this.estudio.descripcion == null || this.estudio.descripcion == ' ') {
+      this.estudio.descripcion = 'Sin estudio';
     }
     this.interconsulta.id_paciente = this.patient;
     this.interconsulta.id_medico = this.medico;
     this.interconsulta.tipo = this.tipoInterconsulta;
-    this.interconsulta.estudios.push(this.estudio)
+    this.interconsulta.estudios.push(this.estudio);
     console.log(this.estudio);
     console.log(this.interconsulta);
-    this.interconsultaService.create(this.interconsulta).subscribe(res=>{
+    this.interconsultaService.create(this.interconsulta).subscribe(res => {
       Swal.fire(
         'Éxito',
         `Interconsulta: ${this.interconsulta.tipo}, creada!`,
         'success'
       )
-      console.log("respuesta"+res);
+      console.log("respuesta" + res);
       this.generarHistorial();
       this.resetForm();
     });
   }
 
   resetForm(): void {
-    this.interconsulta.descripcion='';
-    this.estudio.descripcion='';
-
+    this.interconsulta.descripcion = '';
+    this.estudio.descripcion = '';
   }
 
   isSelectedRole(tipo: string): void {
@@ -143,7 +157,8 @@ export class AddInterconsultaComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si'});
+      confirmButtonText: 'Si'
+    });
     this.resetForm();
   }
 
@@ -155,15 +170,15 @@ export class AddInterconsultaComponent implements OnInit {
   }
 
   filtrarInterconsultas(): void {
-      this.interconsultas = this.interconsultas.filter(ic => ic.id_paciente._id === this.patient._id);
-      console.log('interconsultas filtradas:', this.interconsultas);
+    this.interconsultas = this.interconsultas.filter(ic => ic.id_paciente._id === this.patient._id);
+    console.log('interconsultas filtradas:', this.interconsultas);
   }
 
-  getMedicoCokkie() {
+  getMedicoCookie() {
     let id = JSON.parse(sessionStorage.getItem('key'));
     this.medicoService.get(id).subscribe(res => {
-      this.medico = res; 
-      console.log('usuario:',this.medico);
+      this.medico = res;
+      console.log('usuario:', this.medico);
     });
   }
 }

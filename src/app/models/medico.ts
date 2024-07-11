@@ -7,7 +7,7 @@ export class Medico {
     matricula: string;
     servicio: string;
     funcion: string;
-
+    
     constructor(init?: Partial<Medico>) {
         Object.assign(this, init);
     }

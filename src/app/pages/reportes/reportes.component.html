@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <div class="col-12">
+      <div class="card-title">
+        <h4>Interconsultas Mensuales</h4>
+      </div>
+      <div class="col-12 row">
+        <div class="form-group col-6">
+          <label for="mesSelect">Selecciona Mes:</label>
+          <select id="mesSelect" [(ngModel)]="mes" (change)="actualizarTabla()" class="form-control">
+            <option *ngFor="let m of meses; let i = index" [value]="i + 1">{{ m }}</option>
+          </select>
+        </div>
+        <div class="form-group col-6">
+          <label for="anioInput">Ingresa Año:</label>
+          <input id="anioInput" type="number" [(ngModel)]="anio" (change)="actualizarTabla()" class="form-control"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <table id="example1" class="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Especialidad</th>
+          <ng-container *ngFor="let dia of dias">
+            <th>{{ dia }}</th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let especialidad of tablaDatos">
+          <tr>
+            <th colspan="{{dias.length + 1}}">{{ especialidad.nombre }}</th>
+          </tr>
+          <tr *ngFor="let medico of especialidad.medicos">
+            <td>{{ medico.nombre }}</td>
+            <ng-container *ngFor="let interconsultas of medico.interconsultas">
+              <td>{{ interconsultas }}</td>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
