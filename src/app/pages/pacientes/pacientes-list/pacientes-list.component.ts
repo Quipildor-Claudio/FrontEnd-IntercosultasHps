@@ -4,11 +4,13 @@ import { PacienteService } from '../../../services/paciente.service';
 import { PaginatedResponse } from '../../../models/paginatedResponse';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from '../../../pipes/filter.pipe';
-import { AlertServiceService } from '../../../services/alert-service.service';
+import Swal from 'sweetalert2';
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-pacientes-list',
   standalone: true,
-  imports: [CommonModule,FilterPipe],
+  imports: [CommonModule,FilterPipe,RouterModule],
   templateUrl: './pacientes-list.component.html',
   styleUrl: './pacientes-list.component.css'
 })
@@ -21,7 +23,7 @@ export class PacientesListComponent implements OnInit {
   currentPage: number = 1;
   limit: number = 10;
 
-  constructor(private pacienteService: PacienteService,private alertService:AlertServiceService) { }
+  constructor(private pacienteService: PacienteService) { }
 
   ngOnInit(): void {
     this.loadPacientes();
@@ -47,10 +49,26 @@ export class PacientesListComponent implements OnInit {
     this.currentPage = page;
     this.loadPacientes();
   }
-  deletePaciente(id: string): void {
-    this.pacienteService.delete(id).subscribe(() => {
-      this.loadPacientes();
-    });
+
+  delete(item:any): void {
+    Swal.fire({
+      title: '¿Estás Seguro?',
+      text: `Eliminar a: ${item.nombre} ${item.apellido}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, Eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pacienteService.delete(item._id).subscribe(() => {
+          Swal.fire('Eliminado!', 'Su archivo ha sido eliminado', 'success');
+          this.loadPacientes();
+        });
+        
+      }
+    })
+
   }
 
 }

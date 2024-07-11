@@ -19,6 +19,8 @@ export const routes: Routes = [
     ]},
     {path:'pacientes',component:PacientesListComponent},
     {path:'paciente',component:AddPacienteComponent},
+    {path:'paciente/:id',component:AddPacienteComponent},
+
 
 
 
@@ -26,6 +28,8 @@ export const routes: Routes = [
 
     {path:'medicos',component:MedicosListComponent},
     {path:'medico',component:AddMedicoComponent},
+    {path:'medico/:id',component:AddMedicoComponent},
+
     {path:'usuarios',component:UsuariosComponent},
 
 
