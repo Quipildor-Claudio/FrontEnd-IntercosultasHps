@@ -30,8 +30,8 @@
       </thead>
       <tbody>
         <ng-container *ngFor="let especialidad of tablaDatos">
-          <tr>
-            <th colspan="{{dias.length + 1}}">{{ especialidad.nombre }}</th>
+          <tr *ngIf="especialidad.medicos.length!=0">
+            <th colspan="{{dias.length + 1}}" >{{ especialidad.nombre }}</th>
           </tr>
           <tr *ngFor="let medico of especialidad.medicos">
             <td>{{ medico.nombre }}</td>

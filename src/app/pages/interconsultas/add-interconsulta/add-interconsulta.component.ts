@@ -146,7 +146,6 @@ export class AddInterconsultaComponent implements OnInit {
     this.interconsulta.id_medico = this.medico;
     this.interconsulta.tipo = this.tipoInterconsulta;
     this.interconsulta.estudios.push(this.estudio);
-    console.log(this.estudio);
     console.log(this.interconsulta);
     this.interconsultaService.create(this.interconsulta).subscribe(res => {
       Swal.fire(
@@ -158,6 +157,7 @@ export class AddInterconsultaComponent implements OnInit {
       this.generarHistorial();
       this.resetForm();
     });
+    console.log(this.interconsultas)
   }
 
   resetForm(): void {

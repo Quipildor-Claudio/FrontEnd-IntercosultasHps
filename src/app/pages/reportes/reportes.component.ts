@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Medico } from '../../models/medico';
@@ -14,7 +14,7 @@ import { PaginatedResponse } from '../../models/paginatedResponse';
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './reportes.component.html',
-  styleUrl: './reportes.component.css'
+  styleUrls: ['./reportes.component.css']
 })
 export class ReportesComponent implements OnInit {
   anio: number;
@@ -26,6 +26,8 @@ export class ReportesComponent implements OnInit {
   servicios: Servicio[] = [];
   medicos: Medico[] = [];
   tablaDatos: any[] = [];
+  interMedicas: Interconsulta[] = [];
+  diasInter: Interconsulta[] = [];
 
   constructor(
     private interconsultaService: InterconsultaService,
@@ -41,33 +43,34 @@ export class ReportesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getMedicos();
     this.getServicios();
+    this.getMedicos();
   }
 
   generarDias() {
+    this.mes = new Date(this.anio, this.mes, 0).getMonth()+1;
     const daysInMonth = new Date(this.anio, this.mes, 0).getDate();
     this.dias = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+    console.log(daysInMonth);
   }
 
   actualizarTabla() {
     this.generarDias();
-    
+    this.getMedicos();
   }
 
   getServicios() {
-    this.servicioService.getAll().subscribe(res => { 
-      this.servicios = res;
-      console.log('Servicios:', this.servicios);
-    });
+    this.servicioService.getAll().subscribe(res => { this.servicios = res; });
   }
 
   getMedicos() {
     let page = 1;
     const limit = 50;
 
+    this.medicos = []; // Limpiar medicos
+    this.interconsultas = []; // Limpiar interconsultas
+    this.tablaDatos = []; // Limpiar tablaDatos
     this.getMedicosPage(page, limit);
-    this.getInterconsultas(page,limit);
   }
 
   getMedicosPage(page: number, limit: number) {
@@ -76,6 +79,7 @@ export class ReportesComponent implements OnInit {
       if (page < res.totalPages) {
         this.getMedicosPage(page + 1, limit);
       } else {
+        this.getInterconsultas(1, 50); 
       }
     });
   }
@@ -83,43 +87,40 @@ export class ReportesComponent implements OnInit {
   getInterconsultas(page: number, limit: number) {
     this.interconsultaService.getInterconsultas(page, limit).subscribe((res: PaginatedResponse<Interconsulta>) => {
       this.interconsultas = this.interconsultas.concat(res.items);
-      console.log('Interconsultas Página:', page, 'Interconsultas:', res.items);
       if (page < res.totalPages) {
-        this.getInterconsultas(page + 1, limit);  // Continuar obteniendo interconsultas en la siguiente página
+        this.getInterconsultas(page + 1, limit);
       } else {
-        this.organizarDatosTabla();  // Una vez que se obtienen todas las interconsultas, organizar los datos de la tabla
+        this.organizarDatosTabla(); 
       }
     });
   }
 
   organizarDatosTabla() {
+    console.log(this.mes,'/',this.anio)
     const tablaDatos = [];
-
+    const interconsultas_validas = this.interconsultas.filter(interconsulta => interconsulta.id_medico != null);
 
     for (const servicio of this.servicios) {
       const especialidad = { nombre: servicio.servicio, medicos: [] };
-      const medicosServicio = this.medicos.filter(medico => medico.servicio === servicio.servicio);
-
+      const medicosServicio = this.medicos.filter(medico => medico.servicio === servicio.servicio && medico._id != null);
 
       for (const medico of medicosServicio) {
-        const interconsultasMedico = this.interconsultas.filter(interconsulta => interconsulta.id_medico?._id === medico._id);
-
+        const interconsultasMedico = interconsultas_validas.filter(interconsulta => interconsulta.id_medico._id === medico._id);
         const diasInterconsultas = Array(this.dias.length).fill(0);
+
         for (const interconsulta of interconsultasMedico) {
-          const dia = new Date(interconsulta.createdAt).getDate();
-          if (dia > 0 && dia <= this.dias.length) {
+          const fechaInterconsulta = new Date(interconsulta.createdAt);
+          if (fechaInterconsulta.getFullYear() === this.anio && fechaInterconsulta.getMonth() + 1 === this.mes) {
+            const dia = fechaInterconsulta.getDate();
             diasInterconsultas[dia - 1]++;
-            console.log(dia);
           }
         }
-
 
         especialidad.medicos.push({ nombre: `${medico.nombre} ${medico.apellido}`, interconsultas: diasInterconsultas });
       }
       tablaDatos.push(especialidad);
     }
     this.tablaDatos = tablaDatos;
-    console.log('Tabla de Datos:', this.tablaDatos);
+    console.log("Tabla de Datos:", this.tablaDatos);
   }
-
 }
