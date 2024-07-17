@@ -8,6 +8,7 @@ import { MedicosListComponent } from './pages/medicos/medicos-list/medicos-list.
 import { AddMedicoComponent } from './pages/medicos/add-medico/add-medico.component';
 import { AddPacienteComponent } from './pages/pacientes/add-paciente/add-paciente.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { ReportsComponent } from './pages/reports/reports.component';
 
 export const routes: Routes = [
     {path:'',component:LoginComponent},
@@ -31,6 +32,8 @@ export const routes: Routes = [
     {path:'medico/:id',component:AddMedicoComponent},
 
     {path:'usuarios',component:UsuariosComponent},
+    {path:'reports',component:ReportsComponent},
+
 
 
 

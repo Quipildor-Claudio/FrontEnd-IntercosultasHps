@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { API_URI } from '../../../config/config';
@@ -11,7 +11,7 @@ interface InterconsultaResponse {
 }
 @Injectable({
   providedIn: 'root'
-})
+}) 
 export class InterconsultaService {
 
   constructor(private http:HttpClient) { }
@@ -39,4 +39,11 @@ export class InterconsultaService {
   getInterconsultaByPaciente(id:any):Observable<Interconsulta[]>{
     return this.http.get<Interconsulta[]>(`${API_URI}/interconsulta/paciente/${id}`);
   }
+
+
+  buscarPorRangoDeFecha(fechaInicio: string, fechaFin: string): Observable<any> {
+    let params = new HttpParams().set('fechaInicio', fechaInicio).set('fechaFin', fechaFin);
+    return this.http.get<any>(`${API_URI}/search-fecha?${params}`);
+  }
+
 }
