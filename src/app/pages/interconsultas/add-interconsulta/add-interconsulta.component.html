@@ -113,6 +113,7 @@
                                     <div class="card card-none" *ngFor="let estudi of interconsulta.estudios">
                                   
                                       <div class="card-header">
+                                        <span >{{estudi._id}}</span>
                                         <h3 class="card-title p-0">{{ estudi.descripcion }}</h3>
                                         <div class="card-tools">
                                           <button type="button" class="btn btn-tool" data-card-widget="remove" (click)="deleteEstudios(estudi.descripcion)">
@@ -169,8 +170,8 @@
           <tbody>
             <tr *ngFor="let item of interconsultas | filter:filterText">
               <td>{{ item.createdAt | date:'dd/MM/yyyy' }}</td>
-              <td *ngIf="!item.id_medico">Sin médico asignado</td>
-              <td *ngIf="item.id_medico">{{ item.id_medico.apellido }}, {{ item.id_medico.nombre }}</td>
+              <td *ngIf="!item.medico">Sin médico asignado</td>
+              <td *ngIf="item.medico">{{ item.medico.apellido }}, {{ item.medico.nombre }}</td>
               <td>{{ item.descripcion }}</td>
               <td *ngIf="!item.estudios" class="hide-on-mobile">Sin estudios</td>
               <td class="hide-on-mobile">

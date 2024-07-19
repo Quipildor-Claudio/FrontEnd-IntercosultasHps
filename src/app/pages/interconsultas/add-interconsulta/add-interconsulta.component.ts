@@ -147,7 +147,7 @@ export class AddInterconsultaComponent implements OnInit {
   deleteEstudios(id: string) {
     console.log(id)
     const index = this.interconsulta.estudios.findIndex(estudio => {
-      estudio._id === id;
+      estudio.descripcion === id;
       console.log('estudio a borrar:', this.estudio)
     }
 
@@ -164,6 +164,7 @@ export class AddInterconsultaComponent implements OnInit {
     this.interconsulta.paciente = this.patient;
     this.interconsulta.medico = this.medico;
     this.interconsulta.tipo = this.tipoInterconsulta;
+    console.log(this.interconsulta)
 
     this.interconsultaService.create(this.interconsulta).subscribe(res => {
       Swal.fire(
@@ -188,8 +189,6 @@ export class AddInterconsultaComponent implements OnInit {
       console.error('Error al crear interconsulta', err);
     });
   }
-
-
 
   resetForm(): void {
     this.interconsulta.descripcion = '';
