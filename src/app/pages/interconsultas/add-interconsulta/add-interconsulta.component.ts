@@ -27,6 +27,7 @@ export class AddInterconsultaComponent implements OnInit {
   title: string = 'Nueva Interconsulta';
   filterText: any;
   interconsultas: Interconsulta[] = [];
+  interconsultasEjem: Interconsulta[] = [];
   patients: Paciente[] = [];
   patient: Paciente;
   medico: Medico = new Medico();
@@ -105,8 +106,7 @@ export class AddInterconsultaComponent implements OnInit {
         this.patient = patients[0];
         this.banVacio = false;
         this.banInter = true;
-        this.generarHistorial(1, this.totalPages);
-        this.getInterconsultaByPaciente();
+       this.getInterconsultaByPaciente();
         this.banVacio = false;
       }
     })
@@ -149,9 +149,7 @@ export class AddInterconsultaComponent implements OnInit {
     const index = this.interconsulta.estudios.findIndex(estudio => {
       estudio.descripcion === id;
       console.log('estudio a borrar:', this.estudio)
-    }
-
-    );
+    });
     this.interconsulta.estudios.splice(index, 1);
     console.log('estudios finales', this.interconsulta.estudios)
 
@@ -172,8 +170,8 @@ export class AddInterconsultaComponent implements OnInit {
         `Interconsulta: ${this.interconsulta.tipo}, creada!`,
         'success'
       );
-      this.generarHistorial(1, this.totalPages);
       this.resetForm();
+      this.getInterconsultaByPaciente();
       this.interconsulta = new Interconsulta();
       this.estudios = [];
       const formElements = document.querySelectorAll('.form-control');
@@ -187,7 +185,9 @@ export class AddInterconsultaComponent implements OnInit {
         'error'
       );
       console.error('Error al crear interconsulta', err);
+
     });
+
   }
 
   resetForm(): void {
@@ -210,26 +210,6 @@ export class AddInterconsultaComponent implements OnInit {
     });
     this.resetForm();
   }
-
-  generarHistorial(page: number, limit: number): void {
-    this.interconsultaService.getInterconsultas(page, limit).subscribe((res: PaginatedResponse<Interconsulta>) => {
-      this.interconsultas = this.interconsultas.concat(res.items);
-      if (page < res.totalPages) {
-        this.generarHistorial(page + 1, limit);
-      } else {
-        this.interconsultas = this.interconsultas.filter(ic => ic.paciente && ic.paciente._id === this.patient._id);
-        this.interconsultas.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        console.log('interconsultas ordenadas:', this.interconsultas);
-      }
-    });
-  }
-
-  filtrarInterconsultas(): void {
-    this.interconsultas = this.interconsultas.filter(ic => ic.paciente._id === this.patient._id);
-    console.log('interconsultas filtradas:', this.interconsultas);
-  }
-
-  // codigo claudio----------------------------------------------------------------
   getMedicoCokkie() {
     let id = JSON.parse(sessionStorage.getItem('key'));
     this.medicoService.get(id).subscribe(res => {
@@ -242,16 +222,19 @@ export class AddInterconsultaComponent implements OnInit {
   }
   loadInters(): void {
     this.interconsultaService.getInterconsultas(this.currentPage, this.limit).subscribe((data: PaginatedResponse<Interconsulta>) => {
+      this.interconsultasEjem = data.items;
       this.totalItems = data.totalItems;
       this.totalPages = data.totalPages;
       this.currentPage = data.currentPage;
+      console.log(this.interconsultasEjem, this.totalPages)
     });
   }
 
-  getInterconsultaByPaciente(): void {
+ getInterconsultaByPaciente(): void {
     this.interconsultaService.getInterconsultaByPaciente(this.patient._id).subscribe(res => {
       this.interconsultas = res;
+      this.interconsultas.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       console.log(this.interconsultas);
     });
-  }
+  } 
 }
