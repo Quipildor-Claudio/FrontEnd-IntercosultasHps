@@ -65,10 +65,10 @@
                   <td>{{item.cuil}}</td>
                   <td>
                     <div class="btn-group">
-                      <button type="button" class="btn  btn-warning" [routerLink]="['/formproducto',item.id]">
+                      <button type="button" class="btn  btn-warning" [routerLink]="['/medico',item._id]">
                         <i class="fa fa-pen"></i>
                       </button>&nbsp;
-                      <button type="button" class="btn btn-danger" (click)="deletePaciente(item._id)">
+                      <button type="button" class="btn btn-danger" (click)="delete(item)">
                         <i class="fa fa-times"></i>
                       </button>
 

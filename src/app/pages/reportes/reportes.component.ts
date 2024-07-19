@@ -98,14 +98,14 @@ export class ReportesComponent implements OnInit {
   organizarDatosTabla() {
     console.log(this.mes,'/',this.anio)
     const tablaDatos = [];
-    const interconsultas_validas = this.interconsultas.filter(interconsulta => interconsulta.id_medico != null);
+    const interconsultas_validas = this.interconsultas.filter(interconsulta => interconsulta.medico != null);
 
     for (const servicio of this.servicios) {
       const especialidad = { nombre: servicio.servicio, medicos: [] };
       const medicosServicio = this.medicos.filter(medico => medico.servicio === servicio.servicio && medico._id != null);
 
       for (const medico of medicosServicio) {
-        const interconsultasMedico = interconsultas_validas.filter(interconsulta => interconsulta.id_medico._id === medico._id);
+        const interconsultasMedico = interconsultas_validas.filter(interconsulta => interconsulta.medico._id === medico._id);
         const diasInterconsultas = Array(this.dias.length).fill(0);
 
         for (const interconsulta of interconsultasMedico) {

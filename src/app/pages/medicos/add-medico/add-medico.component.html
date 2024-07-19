@@ -32,19 +32,33 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="apellido">Apellido:</label>
-                    <input id="apellido" formControlName="apellido" class="form-control" />
+                    <input id="apellido" formControlName="apellido" class="form-control"
+                      [ngClass]="{'is-invalid': medicoForm.get('apellido').invalid && medicoForm.get('apellido').touched}" />
+                    <span *ngIf="medicoForm.get('nombre').invalid && medicoForm.get('nombre').touched"
+                      class="help-block">
+                      <strong style="color: red;">Apellido es requerido.</strong>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="nombre">Nombre:</label>
-                    <input id="nombre" formControlName="nombre" class="form-control" />
+                    <input id="nombre" formControlName="nombre" class="form-control"
+                      [ngClass]="{'is-invalid': medicoForm.get('nombre').invalid && medicoForm.get('nombre').touched}" />
+                    <span *ngIf="medicoForm.get('nombre').invalid && medicoForm.get('nombre').touched"
+                      class="help-block">
+                      <strong style="color: red;">Nombre es requerido.</strong>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="cuil">DNI / CUIL:</label>
-                    <input id="cuil" formControlName="cuil" class="form-control" />
+                    <input id="cuil" formControlName="cuil" class="form-control"
+                      [ngClass]="{'is-invalid': medicoForm.get('cuil').invalid && medicoForm.get('cuil').touched}" />
+                    <span *ngIf="medicoForm.get('cuil').invalid && medicoForm.get('cuil').touched" class="help-block">
+                      <strong style="color: red;">Dni es requerido y debe ser valido.</strong>
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -63,19 +77,18 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="servicio">Servicio:</label>
-            <!--         <select [compareWith]="compare" id="servicio" formControlName="servicio" class="form-select">
+                    <select [compareWith]="compare" matNativeControl id="servicio" formControlName="servicio"
+                      name="servicio" class="custom-select"
+                      [ngClass]="{'is-invalid': medicoForm.get('servicio').invalid && medicoForm.get('servicio').touched}">
+                      <option value="" selected>Seleccionar Servicio</option>
                       @for (item of servicios; track item) {
-                      <option [ngvalue]="item">{{item.servicio}}</option>
+                      <option [ngvalue]="item.id">{{item.servicio}}</option>
                       }
-                    </select> -->
-                  
-                      <select matNativeControl id="servicio" formControlName="servicio" name="servicio" class="custom-select">
-                        <option value="" selected>Seleccionar Servicio</option>
-                        @for (item of servicios; track item) {
-                          <option [ngvalue]="item.id">{{item.servicio}}</option>
-                        }
-                      </select>
-
+                    </select>
+                    <span *ngIf="medicoForm.get('servicio').invalid && medicoForm.get('servicio').touched"
+                      class="help-block">
+                      <strong style="color: red;">Servicio es requerido.</strong>
+                    </span>
                   </div>
                 </div>
 
@@ -88,8 +101,12 @@
               </div>
             </div>
             <div class="card-footer">
-              <button type="submit" [disabled]="medicoForm.invalid" class="btn btn-info  "
-                (click)="onSubmit()">Enviar</button>
+              <button *ngIf="!medico._id; else elseBlock" type="submit" [disabled]="medicoForm.invalid"
+                class="btn btn-info " (click)="onSubmit()">Enviar</button>
+              <ng-template #elseBlock>
+                <button type="submit" (click)='update()' class="btn btn-info "
+                  [disabled]="medicoForm.invalid">Actualizar</button>
+              </ng-template>
             </div>
           </form>
         </div>

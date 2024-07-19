@@ -36,21 +36,33 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="dni">DNI:</label>
-                    <input id="dni" formControlName="dni" class="form-control">
+                    <input id="dni" formControlName="dni" class="form-control" 
+                    [ngClass]="{'is-invalid': pacienteForm.get('dni').invalid && pacienteForm.get('dni').touched}">
+                    <span *ngIf="pacienteForm.get('dni').invalid && pacienteForm.get('dni').touched" class="help-block">
+                      <strong style="color: red;">Dni es requerido y debe ser valido.</strong>
+                    </span>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="nombre">Nombres:</label>
-                    <input id="nombre" formControlName="nombre" class="form-control">
+                    <input id="nombre" formControlName="nombre" class="form-control"
+                    [ngClass]="{'is-invalid': pacienteForm.get('nombre').invalid && pacienteForm.get('nombre').touched}">
+                    <span *ngIf="pacienteForm.get('nombre').invalid && pacienteForm.get('nombre').touched" class="help-block">
+                      <strong style="color: red;">Nombre es requerido </strong>
+                    </span>
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="apellido">Apellidos:</label>
-                    <input id="apellido" formControlName="apellido" class="form-control">
+                    <input id="apellido" formControlName="apellido" class="form-control"
+                    [ngClass]="{'is-invalid': pacienteForm.get('apellido').invalid && pacienteForm.get('apellido').touched}">
+                    <span *ngIf="pacienteForm.get('apellido').invalid && pacienteForm.get('apellido').touched" class="help-block">
+                      <strong style="color: red;">Apellido es requerido </strong>
+                    </span>
                   </div>
                 </div>
 
@@ -58,7 +70,10 @@
                   <div class="form-group">
                     <label for="fecha_nac">Fecha de Nacimiento:</label>
                     <input id="fecha_nac" formControlName="fecha_nac" type="date" class="form-control"
-                      class="form-control">
+                    [ngClass]="{'is-invalid': pacienteForm.get('fecha_nac').invalid && pacienteForm.get('fecha_nac').touched}">
+                    <span *ngIf="pacienteForm.get('fecha_nac').invalid && pacienteForm.get('fecha_nac').touched" class="help-block">
+                      <strong style="color: red;">Fecha de nacimiento es requerido </strong>
+                    </span>
                   </div>
                 </div>
 
@@ -68,7 +83,7 @@
                     <select id="sexo"  formControlName="sexo" class="form-control">
                       <option>Hombre</option>
                       <option>Mujer</option>
-                      <option>otro</option>
+                      <option>Otro</option>
                     </select>              
 
 
@@ -113,7 +128,12 @@
 
             </div>
             <div class="card-footer">
-              <button type="submit" class="btn btn-info" (click)="onSubmit()">Guardar</button>
+              <button *ngIf="!paciente._id; else elseBlock" type="submit" [disabled]="pacienteForm.invalid"
+              class="btn btn-info " (click)="onSubmit()">Enviar</button>
+            <ng-template #elseBlock>
+              <button type="submit" (click)='update()' class="btn btn-info "
+                [disabled]="pacienteForm.invalid">Actualizar</button>
+            </ng-template>
             </div>
           </form>
         </div>

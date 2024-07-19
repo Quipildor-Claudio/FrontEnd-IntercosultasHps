@@ -1,0 +1,18 @@
+<div>
+    <label for="fechaInicio">Fecha Inicio:</label>
+    <input id="fechaInicio" [(ngModel)]="fechaInicio" type="date" />
+  
+    <label for="fechaFin">Fecha Fin:</label>
+    <input id="fechaFin" [(ngModel)]="fechaFin" type="date" />
+  
+    <button (click)="buscar()">Buscar</button>
+  </div>
+  
+  <div *ngIf="interconsultas.length > 0">
+    <h3>Resultados:</h3>
+    <ul>
+      <li *ngFor="let interConsulta of interconsultas">
+        {{ interConsulta.descripcion }} - {{ interConsulta.createdAt }}
+      </li>
+    </ul>
+  </div>

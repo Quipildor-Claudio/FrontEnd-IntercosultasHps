@@ -171,8 +171,8 @@
                             <tbody>
                                 <tr *ngFor="let item of interconsultas | filter:filterText">
                                     <td>{{ item.createdAt | date:'dd/MM/yyyy'}}</td>
-                                    <td *ngIf="!item.id_medico">Sin medico asignado</td>
-                                    <td *ngIf="item.id_medico">{{item.id_medico.apellido}}, {{item.id_medico.nombre}}</td>
+                                    <td *ngIf="!item.medico">Sin medico asignado</td>
+                                    <td *ngIf="item.medico">{{item.medico.apellido}}, {{item.medico.nombre}}</td>
                                     <td>{{ item.descripcion }}</td>
                                     <td *ngIf="!estudios" class="hide-on-mobile">Sin estudios</td>
                                     <td class="hide-on-mobile">       

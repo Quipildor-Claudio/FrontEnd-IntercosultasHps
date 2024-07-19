@@ -65,7 +65,7 @@
                 <td>{{item.domicilio_pcte}}&nbsp;{{item.numero_dom}}</td>
                 <td>
                   <div class="btn-group">
-                    <button type="button" class="btn  btn-warning" [routerLink]="['/formproducto',item.id]">
+                    <button type="button" class="btn  btn-warning" [routerLink]="['/paciente',item._id]">
                       <i class="fa fa-pen"></i>
                     </button>&nbsp;
                     <button type="button" class="btn btn-danger" (click)="delete(item)">
@@ -75,9 +75,7 @@
                   </div>
                 </td>
               </tr>
-
               }
-
             </tbody>
           </table>
         </div>
