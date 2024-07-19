@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { PacientesListComponent } from './pages/pacientes/pacientes-list/pacientes-list.component';
-import { AppComponent } from './app.component';
 import { AddInterconsultaComponent } from './pages/interconsultas/add-interconsulta/add-interconsulta.component';
 import { MedicosListComponent } from './pages/medicos/medicos-list/medicos-list.component';
 import { AddMedicoComponent } from './pages/medicos/add-medico/add-medico.component';
@@ -34,8 +33,9 @@ export const routes: Routes = [
     {path:'medico/:id',component:AddMedicoComponent},
 
     {path:'usuarios',component:UsuariosComponent},
-    {path:'reports',component:ReportsComponent},
     {path:'reportes',component:ReportesComponent},
+    {path:'reports',component:ReportsComponent},
+
 
 
 
