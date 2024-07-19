@@ -8,6 +8,7 @@ import { InterconsultaService } from '../../services/interconsulta.service';
 import { MedicoService } from '../../services/medico.service';
 import { ServicioService } from '../../services/servicio.service';
 import { PaginatedResponse } from '../../models/paginatedResponse';
+declare var $: any;
 
 @Component({
   selector: 'app-reportes',
@@ -28,6 +29,7 @@ export class ReportesComponent implements OnInit {
   tablaDatos: any[] = [];
   interMedicas: Interconsulta[] = [];
   diasInter: Interconsulta[] = [];
+  
 
   constructor(
     private interconsultaService: InterconsultaService,
@@ -40,11 +42,26 @@ export class ReportesComponent implements OnInit {
     this.hoy = today.getDate();
     this.meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.generarDias();
+
   }
 
   ngOnInit() {
     this.getServicios();
     this.getMedicos();
+    this.inicializarDataTables();
+  }
+
+  inicializarDataTables() {
+    setTimeout(() => {
+      $("#example1").DataTable({
+        responsive: true,
+        lengthChange: false,
+        autoWidth: false,
+        buttons: [
+           'excel', 'pdf', 'print'
+        ]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    }, 100); // Ajusta el tiempo de espera según sea necesario
   }
 
   generarDias() {
