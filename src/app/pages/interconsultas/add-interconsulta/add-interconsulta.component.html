@@ -142,49 +142,54 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-warning" (click)="save()">GUARDAR</button>&nbsp;
+                            <button type="button" class="btn btn-warning" (click)="save()" [disabled]="!banInter || !interconsulta.descripcion">GUARDAR</button>&nbsp;
                             <button type="button" class="btn btn-danger" (click)="cancel()">CANCELAR</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Historial de Interconsultas</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-                        <table class="col-sm-12 table-bordered text-center me-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="pe-2 ps-2">Fecha</th>
-                                    <th scope="col" class="pe-2 ps-2 ">Medico</th>
-                                    <th scope="col" class="pe-2 ps-2">Diagnostico</th>
-                                    <th scope="col" class="pe-2 ps-2 hide-on-mobile">Estudios</th>
-                                    <th scope="col" class="pe-2 ps-2 hide-on-mobile">Tipo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of interconsultas | filter:filterText">
-                                    <td>{{ item.createdAt | date:'dd/MM/yyyy'}}</td>
-                                    <td *ngIf="!item.medico">Sin medico asignado</td>
-                                    <td *ngIf="item.medico">{{item.medico.apellido}}, {{item.medico.nombre}}</td>
-                                    <td>{{ item.descripcion }}</td>
-                                    <td *ngIf="!estudios" class="hide-on-mobile">Sin estudios</td>
-                                    <td class="hide-on-mobile">       
-                                        <ul class="list-group list-group-flush"><li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion }}</li></ul>
-                                </td>
-                                    <td class="hide-on-mobile">{{ item.tipo }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <!-- Tabla de interconsultas -->
+<div class="col-md-12">
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Historial de Interconsultas</h3>
+      </div>
+      <div class="card-body">
+        <table class="col-sm-12 table-bordered text-center me-0">
+          <thead>
+            <tr>
+              <th scope="col" class="pe-2 ps-2">Fecha</th>
+              <th scope="col" class="pe-2 ps-2">Medico</th>
+              <th scope="col" class="pe-2 ps-2">Diagnóstico</th>
+              <th scope="col" class="pe-2 ps-2 hide-on-mobile">Estudios</th>
+              <th scope="col" class="pe-2 ps-2 hide-on-mobile">Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of interconsultas | filter:filterText">
+              <td>{{ item.createdAt | date:'dd/MM/yyyy' }}</td>
+              <td *ngIf="!item.id_medico">Sin médico asignado</td>
+              <td *ngIf="item.id_medico">{{ item.id_medico.apellido }}, {{ item.id_medico.nombre }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td *ngIf="!item.estudios" class="hide-on-mobile">Sin estudios</td>
+              <td class="hide-on-mobile">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item p-1" *ngFor="let estudio of item.estudios">{{ estudio.descripcion }}</li>
+                </ul>
+              </td>
+              <td class="hide-on-mobile">{{ item.tipo }}</td>
+            </tr>
+            <tr *ngIf="!interconsultas.length">
+              <td colspan="6">No hay interconsultas para mostrar.</td>
+            </tr>
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+  </div>
+  
         </div>
     </div>
 </section>
